@@ -22,13 +22,13 @@ module.exports = app => {
 	app.log("I heard that")
     const issueComment = context.issue({ body: 'Thanks for opening this issue!' })
     return context.github.issues.createComment(issueComment)
+
+  })
 	
 	app.post('/access', function (req, res, next))
 	{
 		app.log("Hello")
 	}
-  })
-
 
   
 }
