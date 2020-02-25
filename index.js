@@ -25,10 +25,10 @@ module.exports = app => {
 
   })
 	
-	app.post('/access', function (req, res, next))
+	app.router.post('/access', function (req, res, next)
 	{
 		app.log("Hello")
-	}
+	})
 
   
 }
