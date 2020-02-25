@@ -8,7 +8,7 @@ module.exports = app => {
   // Your code here
   app.log('Yay, the app was loaded!')
   app.log('This is a test')
-
+  app.log(app.router)
   
   app.on('installation_repositories', async context => {app.log('A new repo has been made')})
   app.on('commit_comment', async context => {app.log('A comment has been made')
@@ -24,10 +24,11 @@ module.exports = app => {
     return context.github.issues.createComment(issueComment)
 
   })
-	
-app.router.post('/access', function (req, res, next)
+	const route = app.route('/probot');
+route.post('/access', function (req, res, next)
 {
 	app.log("Hello")
+	res.end('Hello World');
 	next()
 })
 
