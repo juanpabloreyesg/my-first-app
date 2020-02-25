@@ -1,0 +1,25 @@
+config:
+    target: 'http://localhost:3000'
+    phases:
+      - duration: 1
+        arrivalRate: 1
+    processor: "./payload_loader.js"
+
+scenarios:
+    - flow:
+        - function: "loadPayload"
+        - post:
+            url: "https://smee.io/zLI23rvsFXWrC21F"
+            headers:                
+                X-GitHub-Delivery: "c5090180-49ed-11ea-8356-be97e932013b"
+                X-Hub-Signature: "sha1={{key}}"
+                User-Agent: "GitHub-Hookshot/03ed870"
+                Content-Type: "application/json"
+                X-GitHub-Event: "commit_comment"
+            json:  "{{payload}}"
+
+            
+
+
+                
+                
