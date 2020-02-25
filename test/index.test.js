@@ -31,6 +31,7 @@ describe('My Probot app', () => {
     // Test that we correctly return a test token
     nock('https://api.github.com')
       .post('/app/installations/2/access_tokens')
+	  .times(5)
       .reply(200, { token: 'test' })
 
     // Test that a comment is posted
@@ -38,7 +39,7 @@ describe('My Probot app', () => {
       .post('/repos/hiimbex/testing-things/issues/1/comments', (body) => {
         expect(body).toMatchObject(issueCreatedBody)
         return true
-      })
+      }).times(100)
       .reply(200)
 
     // Receive a webhook event
