@@ -1,4 +1,4 @@
-var config = require("config");
+var config = require("./config");
 var consumer_key = config.lti.key;
 var consumer_secret = config.lti.secret;
 var lti = require('ims-lti');
