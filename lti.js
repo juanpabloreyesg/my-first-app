@@ -33,9 +33,11 @@ function registrarIngeso(req) {
                 };
 
             return respuestaExamen;
-            }));
-        
-}}
+            });
+    });
+}
+
+
 
 
 function calificar(userId, examenId, nota) {

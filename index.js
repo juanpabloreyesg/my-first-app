@@ -2,6 +2,9 @@
  * This is the main entrypoint to your Probot app
  * @param {import('probot').Application} app
  */
+
+var lti = require("lti.js");
+
 module.exports = app => {
   // Your code here
   app.log('Yay, the app was loaded!')
@@ -26,8 +29,19 @@ module.exports = app => {
 route.post('/access', function (req, res, next)
 {
 	app.log("Hello")
+
+  lti.registrarIngreso(req).then(function(resp){
+        var userId = resp.userId;
+        var examenId = resp.examenId;
+        app.log("USUARIO DE COURSERA ID: ", userId, "INGRESANDO AL EXAMEN", examenId);
+
+  }
+
+    )
+
 	res.end('Hello World');
-	next()
+
+	next();
 })
 
   
