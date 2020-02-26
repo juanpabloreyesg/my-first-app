@@ -5,7 +5,7 @@
  * @param {import('probot').Application} app
  */
 
-var lti = require("lti.js");
+var lti = require("./lti");
 
 module.exports = app => {
   // Your code here
@@ -15,22 +15,22 @@ module.exports = app => {
   
   app.on('installation_repositories', async context => {app.log('A new repo has been made')})
   app.on('commit_comment', async context => {app.log('A comment has been made')
-												app.log(context.payload.comment.body)
-												app.log(context.github)
+                        app.log(context.payload.comment.body)
+                        app.log(context.github)
   api = context.github;})
 
 
   app.on('issues.opened', async context => {
-	
-	app.log("I heard that")
+  
+  app.log("I heard that")
     const issueComment = context.issue({ body: 'Thanks for opening this issue!' })
     return context.github.issues.createComment(issueComment)
 
   })
-	const route = app.route('/probot');
+  const route = app.route('/probot');
 route.post('/access', function (req, res, next)
 {
-	app.log("Hello")
+  app.log("Hello")
 
   lti.registrarIngreso(req).then(function(resp){
         var userId = resp.userId;
@@ -41,9 +41,9 @@ route.post('/access', function (req, res, next)
 
     )
 
-	res.end('Hello World');
+  res.end('Hello World');
 
-	next();
+  next();
 })
 
   
