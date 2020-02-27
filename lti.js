@@ -3,6 +3,7 @@ var consumer_key = config.development.key;
 var consumer_secret = config.development.secret;
 var lti = require('ims-lti');
 var Promise = require('bluebird');
+const nonceStore = new lti.Stores.MemoryStore();
 //var db = require("../../models");
 
 
@@ -12,13 +13,19 @@ var Promise = require('bluebird');
  */
 function registrarIngreso(req) {
   return new Promise(function(resolve, reject) {
-    var provider = new lti.Provider(consumer_key, consumer_secret);
-    provider.valid_request(req, function(err, is_valid) {
+    
+    var provider = new lti.Provider(consumer_key, consumer_secret, nonceStore, lti.HMAC_SHA1);
+    
+    
+    provider.valid_request(req, (err, is_valid) => {
       var body = req.body;
-      if (!is_valid || !provider.outcome_service)
+      
+      if(err)
         return reject(
-          new Error("El envío de los parámetros desde Coursera no coincide.")
-        );
+          new Error(err));
+
+      
+      
       if (!body.custom_examen)
         return reject(
           new Error(
@@ -81,7 +88,11 @@ function sendResultToCoursera(body, nota) {
     });
 }
 
+
+
+
 module.exports = {
     registrarIngreso: registrarIngreso,
     calificar: calificar
 };
+
