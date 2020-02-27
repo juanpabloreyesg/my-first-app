@@ -4,7 +4,12 @@
  */
 
 var lti = require("./lti");
+var lti2 = require("./lti2");
 const bodyParser = require('body-parser');
+
+
+var cors = require('cors');
+    
 
 module.exports = app => {
   // Your code here
@@ -27,12 +32,25 @@ module.exports = app => {
 
   })
   const route = app.route('/probot');
+  
   route.use(bodyParser.urlencoded({extended: false}));
+  
+  route.use(cors({
+        origin: [ '172.17.0.22:8080', '172.17.0.22:8081', 'http://172.17.0.22:3000'],
+        credentials: true
+    }));
+
+  
+  route.post('/lti_access',  (req, res, next) =>{
+  app.log(req.headers);
+  lti2.handleLaunch(req,res, next);
+});
+  /**
   route.post('/lti_access', function (req, res, next)
 
 {
   app.log("Hello")
-
+  app.log(req.body)
   lti.registrarIngreso(req).then(function(resp){
         var userId = resp.userId;
         var examenId = resp.examenId;
@@ -47,7 +65,7 @@ module.exports = app => {
   next();
 })
 
-  
+  **/
 }
 
 
