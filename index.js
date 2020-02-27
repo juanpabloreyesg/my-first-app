@@ -5,15 +5,21 @@
  * @param {import('probot').Application} app
  */
 
+const {createProbot} = require('probot')
+
+const probot = createProbot({
+  id: process.env.APP_ID,
+  port: process.env.PORT || 3000,
+  secret: process.env.WEBHOOK_SECRET,
+  cert: process.env.PRIVATE_KEY
+})
+
+
 var lti = require("./lti");
 var lti2 = require("./lti2");
 const bodyParser = require('body-parser');
 
-
-var cors = require('cors');
-    
-
-module.exports = app => {
+const probotAPP = app => {
   // Your code here
   app.log('Yay, the app was loaded!')
   app.log('This is a test')
@@ -37,15 +43,24 @@ module.exports = app => {
   
   route.use(bodyParser.urlencoded({extended: false}));
   
-  route.use(cors({
-        origin: [ '172.17.0.22:8080', '172.17.0.22:8081', 'http://172.17.0.22:3000'],
-        credentials: true
-    }));
-
   
-  route.post('/lti_access',  (req, res, next) =>{
-  app.log(req.headers);
-  lti2.handleLaunch(req,res, next);
+ 
+  
+route.post('/lti_access', function (req, res, next) {
+    //app.log("Coursera response 2 POST:/access/", req.body);
+    lti.registrarIngreso(req).then(function (resp) {
+        //app.log("LTI PARAMS: ", resp);
+        var userId = resp.userId;
+        var examenId = resp.examenId;
+        app.log("USUARIO DE COURSERA ID: ", userId, "INGRESSANDO AL EXAMEN", examenId);
+        req.login({
+            id: userId,
+            rol: "ESTUDIANTE"
+        }, function (err) {
+            if (err) return next(err);
+            res.redirect('/probot');
+        });
+    }).catch(next);
 });
   /**
   route.post('/lti_access', function (req, res, next)
@@ -68,7 +83,12 @@ module.exports = app => {
 })
 
   **/
+
 }
+probot.load(probotAPP)
 
+const expressApp = probot.server;
+expressApp.enable('trust proxy');
 
+probot.start()
 
