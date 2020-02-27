@@ -14,15 +14,13 @@ const nonceStore = new lti.Stores.MemoryStore();
 function registrarIngreso(req) {
   return new Promise(function(resolve, reject) {
     
-    var provider = new lti.Provider(consumer_key, consumer_secret, nonceStore, lti.HMAC_SHA1);
+    var provider = new lti.Provider(consumer_key, consumer_secret);
     
     
-    provider.valid_request(req, (err, is_valid) => {
+    provider.valid_request(req, function(err, is_valid){
       var body = req.body;
       
-      if(err)
-        return reject(
-          new Error(err));
+      if (!is_valid || !provider.outcome_service) return reject(new Error("El envío de los parámetros desde Coursera no coincide."));
 
       
       
