@@ -6,6 +6,7 @@
  */
 
 var lti = require("./lti");
+const bodyParser = require('body-parser');
 
 module.exports = app => {
   // Your code here
@@ -28,7 +29,9 @@ module.exports = app => {
 
   })
   const route = app.route('/probot');
-route.post('/access', function (req, res, next)
+  route.use(bodyParser.urlencoded({extended: false}));
+  route.post('/access', function (req, res, next)
+
 {
   app.log("Hello")
 
