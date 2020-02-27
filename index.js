@@ -30,7 +30,7 @@ module.exports = app => {
   })
   const route = app.route('/probot');
   route.use(bodyParser.urlencoded({extended: false}));
-  route.post('/access', function (req, res, next)
+  route.post('/lti_access', function (req, res, next)
 
 {
   app.log("Hello")
