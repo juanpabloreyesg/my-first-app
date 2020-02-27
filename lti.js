@@ -1,4 +1,4 @@
-var config = require("./config/confit-lti");
+var config = require("./config/config-lti");
 var consumer_key = config.development.key;
 var consumer_secret = config.development.secret;
 var lti = require('ims-lti');
