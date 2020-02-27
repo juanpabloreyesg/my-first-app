@@ -34,7 +34,8 @@ function registrarIngreso(req) {
 
             return respuestaExamen;
             });
-    });
+        
+	)};
 }
 
 
@@ -74,6 +75,6 @@ function sendResultToCoursera(body, nota) {
 }
 
 module.exports = {
-    registrarIngeso: registrarIngeso,
+    registrarIngreso: registrarIngreso,
     calificar: calificar
 };
