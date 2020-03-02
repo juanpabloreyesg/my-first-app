@@ -2,7 +2,7 @@
  * This is the main entrypoint to your Probot app
  * @param {import('probot').Application} app
  */
-
+var sleep = require('sleep');
 const {createProbot} = require('probot')
 
 const probot = createProbot({
@@ -47,17 +47,19 @@ const probotAPP = app => {
 route.post('/lti_access', function (req, res, next) {
     //app.log("Coursera response 2 POST:/access/", req.body);
     lti.registrarIngreso(req).then(function (resp) {
-        //app.log("LTI PARAMS: ", resp);
-        var userId = resp.userId;
-        var examenId = resp.examenId;
-        app.log("USUARIO DE COURSERA ID: ", userId, "INGRESSANDO AL EXAMEN", examenId);
-        req.login({
-            id: userId,
-            rol: "ESTUDIANTE"
-        }, function (err) {
-            if (err) return next(err);
-            res.redirect('/probot');
-        });
+        app.log("LTI PARAMS: ", resp);
+        var userId = resp.EstudianteId;
+        var examenId = resp.actividad;
+        app.log("USUARIO DE COURSERA ID: ", userId, "INGRESANDO AL EXAMEN", examenId);
+        
+        var grade= 0.84
+        
+        res.send("Se envió la nota: "+grade);
+        setTimeout(function(){
+          lti.sendResultToCoursera(resp,grade).then(function(outcome){
+          app.log(outcome);
+        })},1000*60*60*1.05);
+      
     }).catch(next);
 });
   /**

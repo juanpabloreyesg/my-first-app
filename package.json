@@ -25,7 +25,8 @@
     "crypto-js": "^4.0.0",
     "ims-lti": "^3.0.2",
     "probot": "^9.9.6",
-    "cors": "^2.8.1"
+    "cors": "^2.8.1",
+    "sleep":"^6.1.0"
   },
   "devDependencies": {
     "jest": "^24.9.0",

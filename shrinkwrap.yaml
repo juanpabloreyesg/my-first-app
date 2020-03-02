@@ -4,6 +4,7 @@ dependencies:
   crypto-js: 4.0.0
   ims-lti: 3.0.2
   probot: 9.9.6
+  sleep: 6.1.0
 devDependencies:
   jest: 24.9.0
   nock: 11.9.1
@@ -4095,7 +4096,6 @@ packages:
     resolution:
       integrity: sha1-rmzg1vbV4KT32JN5jQPB6pVZtqI=
   /nan/2.14.0:
-    optional: true
     resolution:
       integrity: sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
   /nanomatch/1.2.13:
@@ -5356,6 +5356,15 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-ZYKh3Wh2z1PpEXWr0MpSBZ0V6mZHAQfYevttO11c51CaWjGTaadiKZ+wVt1PbMlDV5qhMFslpZCemhwOK7C89A==
+  /sleep/6.1.0:
+    dependencies:
+      nan: 2.14.0
+    dev: false
+    engines:
+      node: '>=0.8.0'
+    requiresBuild: true
+    resolution:
+      integrity: sha512-Z1x4JjJxsru75Tqn8F4tnOFeEu3HjtITTsumYUiuz54sGKdISgLCek9AUlXlVVrkhltRFhNUsJDJE76SFHTDIQ==
   /slice-ansi/2.1.0:
     dependencies:
       ansi-styles: 3.2.1
@@ -6368,5 +6377,6 @@ specifiers:
   nock: ^11.7.2
   nodemon: ^2.0.2
   probot: ^9.9.6
+  sleep: ^6.1.0
   smee-client: ^1.1.0
   standard: ^14.3.1
